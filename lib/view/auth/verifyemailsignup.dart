@@ -1,5 +1,6 @@
 
 import 'package:ecomapp/controller/auth/verifycodesignup_controller.dart';
+import 'package:ecomapp/core/class/statusrequest.dart';
 import 'package:ecomapp/core/constant/color.dart';
 import 'package:ecomapp/view/auth/customtextbodyauth.dart';
 import 'package:ecomapp/view/auth/customtexttitleauth.dart';
@@ -25,7 +26,8 @@ class VerifyCodeSignUp extends StatelessWidget {
           ).textTheme.headlineLarge!.copyWith(color: AppColor.grey),
         ),
       ),
-      body: Padding(
+      body: GetBuilder<VerifyCodeSignUpControllerImp>(builder: (controller) => controller.statusrequest == StatusRequest.loading ? Center(child: Text("Loading..."),) :
+       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: ListView(
           children: [
@@ -52,7 +54,7 @@ class VerifyCodeSignUp extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ),)
     );
   }
 }

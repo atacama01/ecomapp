@@ -15,7 +15,7 @@ abstract class SignUpController extends GetxController {
   late TextEditingController password;
   bool isshowpassword = true;
 
-  late StatusRequest statusrequest;
+  StatusRequest? statusrequest;
 
   SignupData signupData = SignupData(Get.find());
   List data = [];
@@ -56,7 +56,9 @@ signup() async {
       if (statusrequest == StatusRequest.success) {
         if (response['status'] == "success") {
           print("✅ Success - navigating");
-          Get.offAllNamed(AppRoute.verifycodesignup);
+          Get.offAllNamed(AppRoute.verifycodesignup ,arguments: {
+            "email" : email.text
+          });
         } else {
           print("❌ API returned failure: ${response['message']}");
           Get.defaultDialog(
