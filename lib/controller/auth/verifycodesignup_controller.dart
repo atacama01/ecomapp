@@ -8,13 +8,13 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/utils.dart';
 
 abstract class VerifyCodeSignUpController extends GetxController {
-  late String verifycode;
+  // late String verifycode;
   StatusRequest? statusrequest;
 
   String? email;
   VerifyCodeSignUpData verifyCodeSignUpData = VerifyCodeSignUpData(Get.find());
   checkcode();
-  goTosucssesSignUp();
+  goTosucssesSignUp(String verificationCode);
 }
 
 class VerifyCodeSignUpControllerImp extends VerifyCodeSignUpController {
@@ -28,24 +28,26 @@ class VerifyCodeSignUpControllerImp extends VerifyCodeSignUpController {
   }
 
   @override
-  goTosucssesSignUp() async {
+  goTosucssesSignUp(String verificationCode) async {
     statusrequest = StatusRequest.loading;
     update();
 
-    var response = await verifyCodeSignUpData.postData(email!, verifycode);
+    var response = await verifyCodeSignUpData.postData(
+      email!,
+      verificationCode,
+    );
     statusrequest = handlingData(response);
     if (statusrequest == StatusRequest.success) {
       if (response['status'] == "success") {
         Get.toNamed(AppRoute.sucssesSignUp);
+      } else {
+        Get.defaultDialog(
+          title: "57".tr,
+          middleText: "Verify Code Not Correct",
+        );
+        statusrequest = StatusRequest.failure;
       }
-    } else {
-      Get.defaultDialog(
-        title: "57".tr,
-        middleText: response['message'] ?? "58".tr,
-      );
-      statusrequest = StatusRequest.failure;
     }
     update();
   }
-
 }

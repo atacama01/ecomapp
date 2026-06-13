@@ -9,6 +9,7 @@ import 'package:ecomapp/view/auth/sucssessignup.dart';
 import 'package:ecomapp/view/auth/forgetpassword/verifycode.dart';
 import 'package:ecomapp/view/auth/forgetpassword/resetpassword.dart';
 import 'package:ecomapp/view/auth/verifyemailsignup.dart';
+import 'package:ecomapp/view/screen/home.dart';
 import 'package:ecomapp/view/screen/language.dart';
 import 'package:ecomapp/view/screen/onBoarding.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 List<GetPage<dynamic>>? routes = [
   GetPage(name: "/", page: () => const Language(), middlewares: [MyMiddleware()]),
   // GetPage(name: "/", page: () => TestView()),
+  //Auth
   GetPage(name: AppRoute.login, page: () => const Login()),
   GetPage(name: AppRoute.signup, page: () => const SignUp()),
   GetPage(name: AppRoute.onBoarding, page: () => const OnBoarding()),
@@ -31,6 +33,8 @@ List<GetPage<dynamic>>? routes = [
     name: AppRoute.verifycodesignup,
     page: () => const VerifyCodeSignUp(),
   ),
+  //Home
+  GetPage(name: AppRoute.homepage, page: () => const HomePage()),
 ];
 
 // Map<String, Widget Function(BuildContext)> routess = {

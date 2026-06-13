@@ -49,7 +49,7 @@ class VerifyCodeSignUp extends StatelessWidget {
               },
               //runs when every textfield is filled
               onSubmit: (String verificationCode) {
-                controller.goTosucssesSignUp();
+                controller.goTosucssesSignUp(verificationCode);
               }, // end onSubmit
             ),
           ],

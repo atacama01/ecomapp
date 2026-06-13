@@ -1,4 +1,5 @@
 import 'package:ecomapp/controller/auth/login_controller.dart';
+import 'package:ecomapp/core/class/statusrequest.dart';
 import 'package:ecomapp/core/constant/color.dart';
 import 'package:ecomapp/core/functions/alertexitapp.dart';
 import 'package:ecomapp/core/functions/validinput.dart';
@@ -29,87 +30,93 @@ class Login extends StatelessWidget {
         ),
       ),
       body: GetBuilder<LoginControllerImp>(
-        builder: (controller) => PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (bool didPop, Object? result) async {
-            if (!didPop) {
-              await alertExitApp();
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            child: Form(
-              key: controller.formstate,
-              child: ListView(
-                children: [
-                  LogoAuth(),
-                  SizedBox(height: 20),
-                  Customtexttitleauth(text: "2".tr),
-                  SizedBox(height: 15),
-                  CustomtextBodyeauth(text: "10".tr),
-                  SizedBox(height: 60),
-                  CustomTextFormAuth(
-                    isNumber: false,
-                    hintText: "12".tr,
-                    labelText: "11".tr,
-                    suffixIcon: Icons.email_outlined,
-                    mycontroller: controller.email,
-                    validator: (val) {
-                      return validInput(val!, 5, 100, "email");
-                    },
+        builder: (controller) =>
+            StatusRequest.loading == controller.statusrequest
+            ? Center(child: Text("Loading..."))
+            : PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (bool didPop, Object? result) async {
+                  if (!didPop) {
+                    await alertExitApp();
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
                   ),
-                  SizedBox(height: 15),
-                  CustomTextFormAuth(
-                    isNumber: false,
-                    obscureText: controller.isshowpassword,
-                    onTapIcon: () {
-                      controller.showPassword();
-                    },
-                    hintText: "14".tr,
-                    labelText: "13".tr,
-                    suffixIcon: Icons.lock_outline_rounded,
-                    mycontroller: controller.password,
-                    validator: (val) {
-                      return validInput(val!, 5, 20, "password");
-                    },
+                  child: Form(
+                    key: controller.formstate,
+                    child: ListView(
+                      children: [
+                        LogoAuth(),
+                        SizedBox(height: 20),
+                        Customtexttitleauth(text: "2".tr),
+                        SizedBox(height: 15),
+                        CustomtextBodyeauth(text: "10".tr),
+                        SizedBox(height: 60),
+                        CustomTextFormAuth(
+                          isNumber: false,
+                          hintText: "12".tr,
+                          labelText: "11".tr,
+                          suffixIcon: Icons.email_outlined,
+                          mycontroller: controller.email,
+                          validator: (val) {
+                            return validInput(val!, 5, 100, "email");
+                          },
+                        ),
+                        SizedBox(height: 15),
+                        CustomTextFormAuth(
+                          isNumber: false,
+                          obscureText: controller.isshowpassword,
+                          onTapIcon: () {
+                            controller.showPassword();
+                          },
+                          hintText: "14".tr,
+                          labelText: "13".tr,
+                          suffixIcon: Icons.lock_outline_rounded,
+                          mycontroller: controller.password,
+                          validator: (val) {
+                            return validInput(val!, 5, 20, "password");
+                          },
+                        ),
+                        // Text(
+                        //   "15".tr,
+                        //   textAlign: TextAlign.end,
+                        //   style: Theme.of(context).textTheme.bodyLarge,
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Customtextloginorsignup(
+                              text: "",
+                              textRoute: "15".tr,
+                              onTap: () {
+                                controller.goToForgetPassword();
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        CustomButtonAuth(
+                          text: "16".tr,
+                          onPressed: () {
+                            controller.login();
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        Customtextloginorsignup(
+                          text: "17".tr,
+                          textRoute: "18".tr,
+                          onTap: () {
+                            controller.goToSignUp();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  // Text(
-                  //   "15".tr,
-                  //   textAlign: TextAlign.end,
-                  //   style: Theme.of(context).textTheme.bodyLarge,
-                  // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Customtextloginorsignup(
-                        text: "",
-                        textRoute: "15".tr,
-                        onTap: () {
-                          controller.goToForgetPassword();
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 40),
-                  CustomButtonAuth(
-                    text: "16".tr,
-                    onPressed: () {
-                      controller.login();
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  Customtextloginorsignup(
-                    text: "17".tr,
-                    textRoute: "18".tr,
-                    onTap: () {
-                      controller.goToSignUp();
-                    },
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }
